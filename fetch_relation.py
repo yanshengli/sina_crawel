@@ -27,8 +27,8 @@ class fetch_relation(object):
                     if not line.has_key('style'):
                         num=num+1
                         line1= line.find('a')
-                        print line1.text#好友名
-                        print line1.attrs#好友url
+                        #print line1.text#好友名
+                        #print line1.attrs#好友url
                         user=(line1.text, line1.attrs[0][1])
                         relation_list.append(user)
                 nextpage=soup.find('div', {'class': 'pa'}, {'id': 'pagelist'})
@@ -41,7 +41,8 @@ class fetch_relation(object):
                 nextpage=nextpage.find('a')
                 url='http://weibo.cn'+str(nextpage.attrs[0][1])
 
-        json_user['uid']=re.search(r"\d{3,11}", self.url).group()
+        #json_user['uid']=re.search(r"\d{3,11}", self.url).group()
+        json_user['uid']=self.url.split('/')[3]
         json_user['follow']=relation_list
         json_user['follow_num']=num
 
@@ -51,9 +52,9 @@ class fetch_relation(object):
             if line.text.find(u'微博')>=0:
                 url_weibo='http://weibo.cn'+str(line.attrs[0][1])
                 json_user['微博数']=re.search(r"\d{1,}", line.text).group()
-                print line.text
+                #print line.text
             if line.text.find(u'粉丝')>=0:
                 json_user['粉丝数']=re.search(r"\d{1,}", line.text).group()
-                print line.text
+                #print line.text
         dc.insert(json_user)
         return url_weibo
