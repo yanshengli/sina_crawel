@@ -16,7 +16,7 @@ class fetch_info(object):
         conn=self.conn.get_conn()
         conn=conn.weibo.user_info
         info_num=0
-        while info_num<2 :
+        while info_num<1 :
             print url
             detailpage=method.fetch(url)
             soup= BeautifulSoup(detailpage)
@@ -47,7 +47,7 @@ class fetch_info(object):
                         line = line.text.replace('&nbsp;', '')
                         if line.find(u'赞[')>=0 and line.find(u'原文转发[')<0:
                             print line
-                            line_num=re.findall(r"\[(\d+)\]",line)
+                            line_num=re.findall(r"\[[0-9]+\]",line)
                             if line_num.__len__()==0:
                                 continue
                             info_user['赞数']=line_num[0][1:-1]
@@ -110,6 +110,7 @@ class fetch_info(object):
                 if user_profile is not None:
                     for info in user_profile:
                         user_dict[info[0]]=info[1]
+                user_dict['aboutme']=profile.text
         return user_dict
 
 

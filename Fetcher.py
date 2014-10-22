@@ -35,7 +35,12 @@ class Fetcher(object):
             self.username = username
             self.pwd = pwd
         assert self.username is not None and self.pwd is not None
+        #设置代理
 
+        #proxy = {'http':'121.40.176.213:808'}
+        #proxy_support = urllib2.ProxyHandler(proxy)
+        #opener = urllib2.build_opener(proxy_support)
+        #urllib2.install_opener(opener)
         url = 'http://3g.sina.com.cn/prog/wapsite/sso/login.php?ns=1&revalid=2&backURL=http%3A%2F%2Fweibo.cn%2F&backTitle=%D0%C2%C0%CB%CE%A2%B2%A9&vt='
         rand, passwd, vk = self.get_rand(url)
         data = urllib.urlencode({'mobile': self.username,

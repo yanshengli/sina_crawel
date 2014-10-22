@@ -11,8 +11,8 @@ import time
 def config_login():
     config = ConfigParser.ConfigParser()
     config.read("config.ini")
-    email = config.get("account", "email")
-    password = config.get("account", "password")
+    email = config.get("account1", "email")
+    password = config.get("account1", "password")
     seed=config.get("seed_url", "seed")
     db=config.get('database', 'db')
     collection_info=config.get('collection', 'table_info')
@@ -59,7 +59,7 @@ if __name__ == '__main__':
         temp_user=dict()#加入到已完成的表里
         temp_user['uid']=my_info
         complete.insert(temp_user)
-        time.sleep(30)
+        time.sleep(5)
 
     for post in posts:
         print 'ok'
@@ -69,6 +69,9 @@ if __name__ == '__main__':
                 print every_user[1]
                 follow_method=get_follow(every_user[1],method)
                 url_follow=follow_method.get_follow()#获取follow的url
+                if url_follow==None:
+                    print '用户不存在了'
+                    continue
                 print url_follow
                 relation_method=fetch_relation(url_follow,method,mongodb)#初始化relation类
                 info_page=relation_method.fetch_relation()
@@ -83,5 +86,5 @@ if __name__ == '__main__':
                 temp_user=dict()#加入到已完成的表里
                 temp_user['uid']=every_user
                 complete.insert(temp_user)
-                time.sleep(5)
+                #time.sleep(5)
 
